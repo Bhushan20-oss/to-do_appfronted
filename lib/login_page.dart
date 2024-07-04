@@ -6,7 +6,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: const Color.fromARGB(255, 205, 203, 203),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -27,12 +27,13 @@ class LoginPage extends StatelessWidget {
               const Text(
                 'Welcome Back!',
                 style: TextStyle(
+                  color: Color.fromARGB(255, 243, 250, 176),
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 25),
 
               // Username text field
               Padding(
@@ -69,17 +70,45 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
+              const SizedBox(height: 10),
+
+              // Forgot Password
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Handle forgot password action
+                      },
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
               const SizedBox(height: 20),
 
               // Sign in button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Handle sign in action
+                  },
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.all(20),
+                    backgroundColor: const Color.fromARGB(255, 4, 4, 4),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius:
+                          BorderRadius.circular(10), // Squared rounded corners
                     ),
                   ),
                   child: const Text('Sign In'),
@@ -121,12 +150,14 @@ class LoginPage extends StatelessWidget {
 
               // Register now
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  // Handle register action
+                },
                 child: const Text(
                   'Register now',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 7, 7, 7),
                     decoration: TextDecoration.underline,
                   ),
                 ),
