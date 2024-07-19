@@ -29,6 +29,9 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Sign In Successful')),
         );
+        Navigator.of(context)
+            .pushReplacementNamed('/home'); // Navigate to home page
+
         // Navigate to the next screen
       } catch (e) {
         setState(() {

@@ -3,8 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
-  final String baseUrl = "http://192.168.217.234:8000"; //change your pc ip add
-  final storage = const FlutterSecureStorage();
+  final String baseUrl =
+      "http://192.168.217.234:8000"; // Update with your IP address
+  final storage = FlutterSecureStorage();
 
   Future<void> signIn(String username, String password) async {
     final response = await http.post(
@@ -18,19 +19,15 @@ class AuthService {
       await storage.write(key: 'access', value: data['access']);
       await storage.write(key: 'refresh', value: data['refresh']);
     } else {
-      final errorData = jsonDecode(response.body);
-      throw Exception('Failed to sign in: ${errorData['detail']}');
+      throw Exception('Failed to sign in');
     }
   }
 
   Future<void> refreshToken() async {
     final refreshToken = await storage.read(key: 'refresh');
-    if (refreshToken == null) {
-      throw Exception('No refresh token found');
-    }
 
     final response = await http.post(
-      Uri.parse('$baseUrl/api/token/refresh/'),
+      Uri.parse('$baseUrl/api/account/login/refresh/'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'refresh': refreshToken}),
     );
@@ -39,8 +36,7 @@ class AuthService {
       final data = jsonDecode(response.body);
       await storage.write(key: 'access', value: data['access']);
     } else {
-      final errorData = jsonDecode(response.body);
-      throw Exception('Failed to refresh token: ${errorData['detail']}');
+      throw Exception('Failed to refresh token');
     }
   }
 
@@ -51,5 +47,28 @@ class AuthService {
 
   Future<String?> getAccessToken() async {
     return await storage.read(key: 'access');
+  }
+
+  Future<bool> validateToken() async {
+    final accessToken = await getAccessToken();
+    if (accessToken == null) return false;
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/todos/'), // Replace with a valid endpoint
+      headers: {'Authorization': 'Bearer $accessToken'},
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 401) {
+      try {
+        await refreshToken();
+        return true;
+      } catch (e) {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }
