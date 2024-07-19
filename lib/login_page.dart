@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'auth_service.dart'; // Import the AuthService class
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,21 +14,30 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  void _signIn() {
+  void _signIn() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
-      // Simulate a network request
-      Future.delayed(const Duration(seconds: 2), () {
+      try {
+        await AuthService()
+            .signIn(_usernameController.text, _passwordController.text);
         setState(() {
           _isLoading = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Sign In Successful')),
         );
-      });
+        // Navigate to the next screen
+      } catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Sign In Failed: $e')),
+        );
+      }
     }
   }
 
@@ -41,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 245, 246, 234),
+      backgroundColor: const Color.fromARGB(255, 245, 246, 234),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -146,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: _isLoading ? null : _signIn,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Color.fromARGB(255, 226, 222, 144),
+                      backgroundColor: const Color.fromARGB(255, 226, 222, 144),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             10), // Squared rounded corners
@@ -154,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: _isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text('Sign In'),
+                        : const Text('LOG IN'),
                   ),
 
                   const SizedBox(height: 20),
@@ -176,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       ElevatedButton.icon(
                         onPressed: () {
-                          // Handle Google sign in
+                          // Handle Google log in
                         },
                         icon: const Icon(Icons.account_circle),
                         label: const Text('Google'),
