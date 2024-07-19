@@ -3,14 +3,14 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
-  final String baseUrl = "http://your-django-api-url";
+  final String baseUrl = "http://192.168.217.234:8000"; //change your pc ip add
   final storage = const FlutterSecureStorage();
 
   Future<void> signIn(String username, String password) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/api/token/'),
+      Uri.parse('$baseUrl/api/account/login/'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'username': username, 'password': password}),
+      body: jsonEncode({'email': username, 'password': password}),
     );
 
     if (response.statusCode == 200) {
