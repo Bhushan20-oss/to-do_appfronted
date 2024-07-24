@@ -4,8 +4,26 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
   final String baseUrl =
-      "http://192.168.76.84:8000"; // Update with your IP address
+      "http://192.168.217.7:8000"; // Update with your IP address
   final storage = FlutterSecureStorage();
+
+  Future<void> signUp(String name, String email, String password) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/account/register/'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'name': name, 'email': email, 'password': password}),
+    );
+
+    if (response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      await storage.write(key: 'access', value: data['access']);
+      await storage.write(key: 'refresh', value: data['refresh']);
+    } else {
+      final errorData = jsonDecode(response.body);
+      throw Exception('Failed to sign up: ${errorData['detail']}');
+    }
+  }
+
 
   Future<void> signIn(String username, String password) async {
     final response = await http.post(
