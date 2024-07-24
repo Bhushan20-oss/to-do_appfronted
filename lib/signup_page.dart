@@ -15,37 +15,7 @@ class _SignupPageState extends State<SignupPage> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  // void _signUp() async {
-  //   if (_formKey.currentState!.validate()) {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-
-  //     try {
-  //       await AuthService().signUp(
-  //         _nameController.text,
-  //         _emailController.text,
-  //         _passwordController.text,
-  //       );
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(content: Text('Sign Up Successful')),
-  //       );
-  //       Navigator.of(context).pushReplacementNamed('/login'); // Navigate to login page
-  //     } catch (e) {
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         //SnackBar(content: Text('Sign Up Faile')),
-  //         Navigator.of(context).pushReplacementNamed('/login');
-  //       );
-  //     }
-  //   }
-  // }
-
+  
   void _signUp() async {
   if (_formKey.currentState!.validate()) {
     setState(() {
