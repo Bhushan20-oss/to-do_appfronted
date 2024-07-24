@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
   final String baseUrl =
-      "http://192.168.217.234:8000"; // Update with your IP address
+      "http://192.168.76.84:8000"; // Update with your IP address
   final storage = FlutterSecureStorage();
 
   Future<void> signIn(String username, String password) async {
