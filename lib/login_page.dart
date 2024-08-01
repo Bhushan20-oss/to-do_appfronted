@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auth_service.dart'; // Import the AuthService class
+import 'forgotpassword.dart'; // Import the ForgotPasswordPage
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -31,8 +32,6 @@ class _LoginPageState extends State<LoginPage> {
         );
         Navigator.of(context)
             .pushReplacementNamed('/home'); // Navigate to home page
-
-        // Navigate to the next screen
       } catch (e) {
         setState(() {
           _isLoading = false;
@@ -66,17 +65,12 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 50),
-
-                  // Logo
                   const Icon(
                     Icons.lock,
                     size: 100,
                     color: Color.fromARGB(255, 5, 5, 5),
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Welcome back text
                   const Text(
                     'Welcome Back!',
                     style: TextStyle(
@@ -85,10 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   const SizedBox(height: 25),
-
-                  // Username text field
                   TextFormField(
                     controller: _usernameController,
                     decoration: InputDecoration(
@@ -108,10 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Password text field
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
@@ -132,15 +120,13 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-
                   const SizedBox(height: 10),
-
-                  // Forgot Password
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
-                        // Handle forgot password action
+                        Navigator.of(context).pushNamed(
+                            '/forgotpassword'); // Navigate to ForgotPasswordPage
                       },
                       child: const Text(
                         'Forgot Password?',
@@ -151,78 +137,23 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Sign in button
                   ElevatedButton(
                     onPressed: _isLoading ? null : _signIn,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       backgroundColor: const Color.fromARGB(255, 226, 222, 144),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            10), // Squared rounded corners
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: _isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : const Text('LOG IN'),
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Or continue with
-                  const Text(
-                    'Or continue with',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-
                   const SizedBox(height: 20),
-
-                  // Google + Apple buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          // Handle Google log in
-                        },
-                        icon: const Icon(Icons.account_circle),
-                        label: const Text('Google'),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(50, 50),
-                          backgroundColor:
-                              const Color.fromARGB(255, 21, 20, 20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          // Handle Apple sign in
-                        },
-                        icon: const Icon(Icons.apple),
-                        label: const Text('Apple'),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(50, 50),
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
                   const SizedBox(height: 20),
-
-                  // Register now
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacementNamed('/signup');

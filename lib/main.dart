@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:list_app/forgotpassword.dart';
+import 'package:list_app/otplogin.dart';
 import 'auth_service.dart';
 import 'login_page.dart';
 import 'signup_page.dart';
@@ -20,6 +22,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
         '/home': (context) => const Home(),
+        //'/otplogin': (context) => const OtpScreen(),
+        '/forgotpassword': (context) => const ForgotPasswordPage(),
       },
     );
   }
